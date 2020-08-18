@@ -24,7 +24,7 @@ MYSQL experiment notes;
 > the docker instance could be shared with other instances, make the mysql server running in background. 
 > mysql -u [username] -p [dbname] -e [query] > [somefilename] this is how you get the data to a file 
 
- docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -e MYSQL_USER=dinda  -e MYSQL_PASSWORD=dinda  -e MYSQL_DATABASE=dinda -d mysql:5.7.16
+ docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -e MYSQL_USER=dinda  -e MYSQL_PASSWORD=dinda  -e MYSQL_DATABASE=dinda -d java-judge:1.0.0
 
  docker exec -it some-mysql bash
 
@@ -34,3 +34,10 @@ mysql -u dinda -pdinda dinda -s -e "select * from employe;" >> out.txt  2>err.tx
 export MYSQL_PWD=dinda ;mysql -u dinda  dinda -s -e "select * from employe;" >> out.txt  2>err.txt ; // solves the mysql warning on the err file , about the password being passed from comand line 
 
 
+// Test cases ; 
+
+A multiline and the error text should honor the multiline;
+
+export MYSQL_PWD=dinda ;mysql -u dinda  dinda -s -e "select 
+* from *
+employe;" >> out.txt  2>err.txt  
