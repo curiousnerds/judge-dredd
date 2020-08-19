@@ -96,7 +96,7 @@ HEALTHCHECK CMD /healthcheck.sh
 EXPOSE 3306
 CMD ["mysqld"]
 
-
+COPY /tests   /tests
 # mysql related change over
 
 ENV BOX_ROOT /var/local/lib/isolate
