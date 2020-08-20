@@ -24,7 +24,7 @@ MYSQL experiment notes;
 > the docker instance could be shared with other instances, make the mysql server running in background. 
 > mysql -u [username] -p [dbname] -e [query] > [somefilename] this is how you get the data to a file 
 
- docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -e MYSQL_USER=dinda  -e MYSQL_PASSWORD=dinda  -e MYSQL_DATABASE=dinda -d java-judge:1.0.0
+ docker run -e MYSQL_ROOT_PASSWORD=my-secret-pw -e MYSQL_USER=dinda  -e MYSQL_PASSWORD=dinda  -e MYSQL_DATABASE=dinda -d java-judge:1.0.0
 
  docker exec -it some-mysql bash
 
@@ -41,3 +41,14 @@ A multiline and the error text should honor the multiline;
 export MYSQL_PWD=dinda ;mysql -u dinda  dinda -s -e "select 
 * from *
 employe;" >> out.txt  2>err.txt  
+
+
+
+
+Process: 
+ first build the language pack by building 
+>  docker build -t curiousnerds/languagepack:1.0.0 . 
+If you want to have mysql 8 then build as 
+>  docker build -t curiousnerds/mysql-8:1.0.0 . -f Dockerfile.mysql
+    You can test the application by  
+>       docker run -e MYSQL_ROOT_PASSWORD=my-secret-pw -e MYSQL_USER=dinda  -e MYSQL_PASSWORD=dinda  -e MYSQL_DATABASE=dinda -d curiousnerds/mysql-8:1.0.0

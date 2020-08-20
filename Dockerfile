@@ -70,36 +70,13 @@ RUN set -xe && \
     rm -rf /tmp/*
 
  # Adding mysql related docker changes. taken from https://github.com/mysql/mysql-docker/blob/mysql-server/5.6/Dockerfile
-FROM oraclelinux:7-slim
 
-ARG MYSQL_SERVER_PACKAGE=mysql-community-server-minimal-5.6.49
-ARG MYSQL_SHELL_PACKAGE=
 
-    # Install server
-RUN yum install -y https://repo.mysql.com/mysql-community-minimal-release-el7.rpm \
-          https://repo.mysql.com/mysql-community-release-el7.rpm \
-      && yum-config-manager --enable mysql56-server-minimal \
-      && yum install -y \
-          $MYSQL_SERVER_PACKAGE \
-          $MYSQL_SHELL_PACKAGE \
-          libpwquality \
-      && yum clean all \
-      && mkdir /docker-entrypoint-initdb.d
-
-VOLUME /var/lib/mysql
-
-COPY docker-entrypoint.sh /entrypoint.sh
-COPY healthcheck.sh /healthcheck.sh
-
-ENTRYPOINT ["sh","/entrypoint.sh"]
-HEALTHCHECK CMD /healthcheck.sh
-EXPOSE 3306
-CMD ["mysqld"]
 
 COPY /tests   /tests
 # mysql related change over
 
 ENV BOX_ROOT /var/local/lib/isolate
 
-LABEL maintainer="Abhiram misrha"
-LABEL version="1.0.0"
+# add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
+
