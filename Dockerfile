@@ -70,14 +70,18 @@ RUN set -xe && \
     make -j$(nproc) install && \
     rm -rf /tmp/*
 
- # Adding mysql related docker changes. taken from https://github.com/mysql/mysql-docker/blob/mysql-server/5.6/Dockerfile
 
 
 
 COPY /tests   /tests
-# mysql related change over
+
 
 ENV BOX_ROOT /var/local/lib/isolate
+
+# mysql related change over
+
+# Adding mysql related docker changes. taken from https://github.com/mysql/mysql-docker/tree/mysql-server/8.0
+
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -r mysql && useradd -r -g mysql mysql
