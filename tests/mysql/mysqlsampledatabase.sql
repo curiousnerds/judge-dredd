@@ -30,9 +30,7 @@ DROP TABLE IF EXISTS `customers`;
 
 CREATE TABLE `customers` (
   `customerNumber` int(11) NOT NULL,
-  `customerName` varchar(50) NOT NULL,
-  `contactLastName` varchar(50) NOT NULL,
-  `contactFirstName` varchar(50) NOT NULL,
+s
   `phone` varchar(50) NOT NULL,
   `addressLine1` varchar(50) NOT NULL,
   `addressLine2` varchar(50) DEFAULT NULL,
