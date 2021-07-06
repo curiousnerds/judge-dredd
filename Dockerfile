@@ -70,6 +70,24 @@ RUN set -xe && \
     make -j$(nproc) install && \
     rm -rf /tmp/*
 
+# ADDING PYTHON SUPPORT
+# Check for latest version here: https://www.python.org/downloads
+ENV PYTHON_VERSIONS \
+      3.8.1 \
+      2.7.17
+RUN set -xe && \
+    for VERSION in $PYTHON_VERSIONS; do \
+      curl -fSsL "https://www.python.org/ftp/python/$VERSION/Python-$VERSION.tar.xz" -o /tmp/python-$VERSION.tar.xz && \
+      mkdir /tmp/python-$VERSION && \
+      tar -xf /tmp/python-$VERSION.tar.xz -C /tmp/python-$VERSION --strip-components=1 && \
+      rm /tmp/python-$VERSION.tar.xz && \
+      cd /tmp/python-$VERSION && \
+      ./configure \
+        --prefix=/usr/local/python-$VERSION && \
+      make -j$(nproc) && \
+      make -j$(nproc) install && \
+      rm -rf /tmp/*; \
+    done
 
 
 
