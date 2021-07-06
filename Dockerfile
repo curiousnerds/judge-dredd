@@ -68,6 +68,29 @@ RUN set -xe && \
     git checkout c43acde2bde22b0f18ec5e3a0f3ebd66d96b0bee && \
     make -j$(nproc) install && \
     rm -rf /tmp/*
+
+#Adding python version
+
+# Check for latest version here: https://www.python.org/downloads
+ENV PYTHON_VERSIONS \
+      3.8.1 \
+      2.7.17
+RUN set -xe && \
+    for VERSION in $PYTHON_VERSIONS; do \
+      curl -fSsL "https://www.python.org/ftp/python/$VERSION/Python-$VERSION.tar.xz" -o /tmp/python-$VERSION.tar.xz && \
+      mkdir /tmp/python-$VERSION && \
+      tar -xf /tmp/python-$VERSION.tar.xz -C /tmp/python-$VERSION --strip-components=1 && \
+      rm /tmp/python-$VERSION.tar.xz && \
+      cd /tmp/python-$VERSION && \
+      ./configure \
+        --prefix=/usr/local/python-$VERSION && \
+      make -j$(nproc) && \
+      make -j$(nproc) install && \
+      rm -rf /tmp/*; \
+    done
+
+# python addition done.
+
 ENV BOX_ROOT /var/local/lib/isolate
 
 LABEL maintainer="Abhiram misrha"
