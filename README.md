@@ -20,6 +20,7 @@ Once build done , try run it , pass in mysql related paramters, make sure to pas
     
     ` docker run \
     --privileged \
+    -v $PWD:/tests -w /tests \
     -e MYSQL_ROOT_PASSWORD=my-secret-pw \
     -e MYSQL_USER=dinda   \
     -e MYSQL_PASSWORD=dinda  \
