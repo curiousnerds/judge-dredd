@@ -1,7 +1,0 @@
-2020-08-18 16:55:36 0 [Note] mysqld (mysqld 5.6.49) starting as process 7 ...
-2020-08-18 16:55:36 7 [Note] Plugin 'FEDERATED' is disabled.
-mysqld: Table 'mysql.plugin' doesn't exist
-2020-08-18 16:55:36 7 [ERROR] Can't open the mysql.plugin table. Please run mysql_upgrade to create it.
-2020-08-18 16:55:36 7 [Note] Binlog end
-2020-08-18 16:55:36 7 [Note] Shutting down plugin 'MyISAM'
-2020-08-18 16:55:36 7 [Note] Shutting down plugin 'CSV'
