@@ -17,7 +17,7 @@ public class Main {
 
         LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder.request()
                 .selectors(
-                        selectPackage("org.example.fest"),
+                        selectPackage("*"),
                         selectClass(SolutionTest.class)
                 )
                 .build();
