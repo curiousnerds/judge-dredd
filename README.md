@@ -40,7 +40,7 @@
              
              `./run ` // if you wish to run all the languages without isolate
              
-             `./run --isolate`  // if you wish to run all the language in isolate 
+             `./run --isolate`  // if you wish to run all the isllanguage in isolate 
              
              `./run --language <language_foldername> ` // If you want to run specific language , with or without isolate by appending/not  --isolate
              
@@ -91,3 +91,49 @@
              employe;" >> out.txt  2>err.txt  
              
              
+Some steps for mac.
+===================
+This will produce the linux/amd64 and linux/arm64 version of builds simultanegously
+
+docker buildx build --platform linux/amd64,linux/arm64 -t curiousnerds/languagepack-mac:1.0.0 .
+
+In the recent docker versions the cgroupv2 is added, which is not compatible
+for isolate which uses cgroupv1. 
+But in docker we can change the settings to fallback to cgroupv1 
+by changing it in the 
+/Users/<name>/Library/Group \ Containers/group.com.docker/settings.json
+"deprecatedCgroupv1": true. 
+
+A newer version of the isolate is on progress which makes use of the cgroupv2 version
+keep following to github.com/ioi/isolate  for more information on the github.com/ioi/isolate/issues/78
+
+#####
+Read about making architectural independent docker image in Dockerfile.
+https://nielscautaerts.xyz/making-dockerfiles-architecture-independent.html
+
+Basically there are two ways you can do the build 
+
+Building and keeping the image locally 
+---------
+docker build --platform linux/arm64 -t  <tag> . 
+docker build --platform linux/amd64 -t -<tag> .
+
+Building and keeping the image on docker registry 
+---------
+The below way has advantage which can build the image for multiple platforms 
+but you will have to push the image to the registry ( for registry you must sign up/in to docker registry)
+pushing the image takes a longtime, thus this must be the very last stage after you verified using the 
+above method ( keeping image locally)
+docker buildx build --platform linux/amd64,linux/arm64  --push -t aaraksheet/myrepo:languagepack . 
+
+TODO: currently the repository name is aaraksheet/myrepo, we can change the name later on 
+
+REMEMBER 
+============
+If you are using the docker registry method always pull the image the image locally won't 
+refresh unless you download/pull it from registry 
+
+`docker pull aaraksheet/myrepo:languagepack`
+
+
+Running on Mac  M1 using --platform linux/amd64 is very slow 

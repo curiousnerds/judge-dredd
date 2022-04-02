@@ -1,20 +1,25 @@
 # Check for latest version here: https://hub.docker.com/_/buildpack-deps?tab=tags&page=1&name=buster&ordering=last_updated
 # This is just a snapshot of buildpack-deps:buster that was last updated on 2019-12-28.
 
-#Abhiram : this is taken from https://github.com/judge0/api-base/blob/v1.2.1/Dockerfile 
+#Abhiram : this is taken from https://github.com/judge0/api-base/blob/v1.2.1/Dockerfile
 
-FROM judge0/buildpack-deps:buster-2019-12-28
+FROM buildpack-deps:jammy
 
-# Check for latest version here: https://jdk.java.net
-RUN set -xe && \
-    curl -fSsL "https://download.java.net/java/GA/jdk13.0.1/cec27d702aa74d5a8630c65ae61e4305/9/GPL/openjdk-13.0.1_linux-x64_bin.tar.gz" -o /tmp/openjdk13.tar.gz && \
-    mkdir /usr/local/openjdk13 && \
-    tar -xf /tmp/openjdk13.tar.gz -C /usr/local/openjdk13 --strip-components=1 && \
-    rm /tmp/openjdk13.tar.gz && \
-    ln -s /usr/local/openjdk13/bin/javac /usr/local/bin/javac && \
-    ln -s /usr/local/openjdk13/bin/java /usr/local/bin/java && \
-    ln -s /usr/local/openjdk13/bin/jar /usr/local/bin/jar
+ARG TARGETPLATFORM
+RUN echo '===========================SETTING UP JAVA FOR '$TARGETPLATFORM'=========================='
 
+# Since the java is being downloaded from a source, its essential to download the specific version meant
+#for the targetplatform read https://nielscautaerts.xyz/making-dockerfiles-architecture-independent.html
+
+RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then ARCHITECTURE='https://cdn.azul.com/zulu/bin/zulu13.46.15-ca-jdk13.0.10-linux_x64.tar.gz'; elif [ "$TARGETPLATFORM" = "linux/arm64" ]; then ARCHITECTURE='https://cdn.azul.com/zulu-embedded/bin/zulu13.46.15-ca-jdk13.0.10-linux_aarch64.tar.gz'; else ARCHITECTURE='https://cdn.azul.com/zulu/bin/zulu13.46.15-ca-jdk13.0.10-linux_x64.tar.gz'; fi \
+    && curl -fSsL   "${ARCHITECTURE}" -o /tmp/openjdk13.tar.gz \
+    && mkdir /usr/local/openjdk13  \
+    && tar xzf /tmp/openjdk13.tar.gz  -C /usr/local/openjdk13 --strip-components=1 \
+    && ln -s /usr/local/openjdk13/bin/javac /usr/local/bin/javac  \
+    && ln -s /usr/local/openjdk13/bin/java /usr/local/bin/java  \
+    && ln -s /usr/local/openjdk13/bin/jar /usr/local/bin/jar
+
+# Check for latest version here: https://jdk.java.net, and version 13 can be downloaded from https://download.java.net/java/GA/jdk13.0.1/cec27d702aa74d5a8630c65ae61e4305/9/GPL/openjdk-13.0.1_linux-x64_bin.tar.gz
 
 
 # JUnit Platform Console Standalone
@@ -27,7 +32,7 @@ RUN set -xe && \
 
 ADD java-libs/    /usr/local/java-libs/
 
-# Check for latest version here: https://ftpmirror.gnu.org/bash
+## Check for latest version here: https://ftpmirror.gnu.org/bash
 ENV BASH_VERSIONS \
       5.0
 RUN set -xe && \
@@ -44,8 +49,8 @@ RUN set -xe && \
       rm -rf /tmp/*; \
     done
 
-# Check for latest version here: https://packages.debian.org/buster/sqlite3
-# Used for support of SQLite.
+## Check for latest version here: https://packages.debian.org/buster/sqlite3
+## Used for support of SQLite.
 RUN set -xe && \
     apt-get update && \
     apt-get install -y --no-install-recommends sqlite3 && \
