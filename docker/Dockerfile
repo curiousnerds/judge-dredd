@@ -30,7 +30,7 @@ RUN set -xe && \
 
 # Add junit related libraries
 
-ADD java-libs/    /usr/local/java-libs/
+ADD java-libs    /usr/local/java-libs/
 
 ## Check for latest version here: https://ftpmirror.gnu.org/bash
 ENV BASH_VERSIONS \

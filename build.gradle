@@ -1,0 +1,17 @@
+plugins {
+    id 'com.bmuschko.docker-remote-api' version '6.7.0'
+}
+version '1.0.0'
+// Import task types
+import com.bmuschko.gradle.docker.tasks.image.*
+
+
+task copyJavaLibsForDocker(dependsOn: ':testing:prepareLibs', type: Copy) {
+    from(file(project(':testing').buildDir.toString()+'/libs/'))
+    into(rootDir.toString()+'/docker/java-libs')
+}
+
+task buildMyAppImage( dependsOn : 'copyJavaLibsForDocker', type: DockerBuildImage) {
+    inputDir = file('docker')
+    images.add('aaraksheet/myrepo:languagepack-test')
+}
