@@ -1,0 +1,44 @@
+plugins {
+    id 'java'
+}
+
+group 'com.curiousnerds.framework.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+compileJava {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}
+dependencies {
+    // implementation 'org.junit.jupiter:junit-jupiter:5.4.0'
+    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter
+  // https://mvnrepository.com/artifact/org.junit.platform/junit-platform-launcher
+    //implementation 'org.junit.platform:junit-platform-launcher:1.4.0'
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+   // implementation 'com.fasterxml.jackson.core:jackson-databind:2.5.3'
+    // https://mvnrepository.com/artifact/org.junit.platform/junit-platform-launcher
+
+    // Migrated versions
+    implementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+    implementation 'org.junit.platform:junit-platform-launcher:1.8.2'
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2.2'
+
+
+}
+
+
+configurations {
+    externalLib.extendsFrom(implementation)
+}
+
+task prepareLibs(dependsOn: 'jar' ,type: Copy){
+        from configurations.externalLib {
+        into file(buildDir.toString()+'/libs/')
+
+    }
+}
