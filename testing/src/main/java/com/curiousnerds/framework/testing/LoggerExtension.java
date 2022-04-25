@@ -2,14 +2,18 @@ package com.curiousnerds.framework.testing;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.extension.AfterAllCallback;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestWatcher;
 
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public class LoggerExtension implements TestWatcher, AfterAllCallback {
+public class LoggerExtension implements TestWatcher, AfterAllCallback
+{
 
     List<Wrap> existing = new ArrayList<>();
 
@@ -22,34 +26,7 @@ public class LoggerExtension implements TestWatcher, AfterAllCallback {
         System.out.println(s);
     }
 
-    class Wrap <T>{
-        public String testCase; // name of the test case,
-        public T expected;
-        public T actual;
-        public boolean status;
-        public String failReason;
 
-
-        public Wrap(String testCase, T expected, T actual, boolean status, String failReason) {
-            this.testCase = testCase;
-            this.expected = expected;
-            this.actual = actual;
-            this.status = status;
-            this.failReason = failReason;
-        }
-
-
-        @Override
-        public String toString() {
-            return "Wrap{" +
-                    "testCase='"+ testCase +'\''+
-                    ",expected='" + expected + '\'' +
-                    ", actual='" + actual + '\'' +
-                    ", status=" + status + '\'' +
-                    ",failedReason='" + failReason+ '\'' +
-                    '}';
-        }
-    }
 
     private ExtensionContext.Store getStore(ExtensionContext context) {
         ExtensionContext.Namespace namespace = ExtensionContext.Namespace.create(getClass());
@@ -73,7 +50,15 @@ public class LoggerExtension implements TestWatcher, AfterAllCallback {
                 existing= new ArrayList<>();
                 existing.add(new Wrap(o1.expected.toString(), o1.actual.toString(), true));
             } else {*/
-            existing.add(new Wrap(extensionContext.getDisplayName(),o1.expected.toString(), o1.actual.toString(), true,""));
+            String expected =o1.expected==null? "N/A": o1.expected.toString();
+            String actual = o1.actual==null? "N/A": o1.actual.toString();
+            boolean status=true;
+            String failReason="";
+            if(expected.equals("N/A") || actual.equals("N/A")){
+                status=false;
+                failReason="Author please provide this.expected and this.actual values\n";
+            }
+            existing.add(new Wrap(extensionContext.getDisplayName(),expected, actual, status,failReason));
             //   }
             //    store.put("STORE", existing);
          //   System.out.println(existing);
@@ -112,3 +97,32 @@ public class LoggerExtension implements TestWatcher, AfterAllCallback {
         //  }
     }
 }
+class Wrap <T>{
+    public String testCase; // name of the test case,
+    public T expected;
+    public T actual;
+    public boolean status;
+    public String failReason;
+
+
+    public Wrap(String testCase, T expected, T actual, boolean status, String failReason) {
+        this.testCase = testCase;
+        this.expected = expected;
+        this.actual = actual;
+        this.status = status;
+        this.failReason = failReason;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Wrap{" +
+                "testCase='"+ testCase +'\''+
+                ",expected='" + expected + '\'' +
+                ", actual='" + actual + '\'' +
+                ", status=" + status + '\'' +
+                ",failedReason='" + failReason+ '\'' +
+                '}';
+    }
+}
+

@@ -62,6 +62,7 @@ public class Exercise4Test extends ClassicOnlineStore {
          */
         boolean everyoneWantsSomething = false;
 
+
         assertThat(everyoneWantsSomething, is(true));
     }
 }

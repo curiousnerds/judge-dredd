@@ -28,7 +28,7 @@ public class Exercise3Test extends ClassicOnlineStore {
         assertThat(sum, is(32L));
     }
 
-    @Easy @Test
+     @Easy @Test
     public void richestCustomer() {
         List<Customer> customerList = this.mall.getCustomerList();
 
