@@ -13,8 +13,12 @@ task copyJavaLibsForDocker(dependsOn: ':testing:prepareLibs', type: Copy) {
 
 task buildMyAppImage( dependsOn : 'copyJavaLibsForDocker', type: DockerBuildImage) {
     inputDir = file('docker')
+
     images.add('aaraksheet/myrepo:languagepack')
-    platform= System.properties['os.arch'].toString().startsWith('aarch64') ? 'linux/arm64' : 'linux/amd64'
+    //TODO: BUG that prevents taking the targetplatform arg into the docker file which
+    // is used to download the right version of the java etc.
+    buildArgs['TARGETPLATFORM'] = System.properties['os.arch'].toString().startsWith('aarch64') ? 'linux/arm64' : 'linux/amd64'
+    platform.set("linux/arm64")
     registryCredentials.username='aaraksheet@gmail.com'
     registryCredentials.password='Dinda@123'
     registryCredentials.url='https://hub.docker.com/'
