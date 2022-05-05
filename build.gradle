@@ -1,5 +1,5 @@
 plugins {
-    id 'com.bmuschko.docker-remote-api' version '6.7.0'
+    id 'com.bmuschko.docker-remote-api' version '7.3.0'
 }
 version '1.0.0'
 // Import task types
@@ -13,5 +13,9 @@ task copyJavaLibsForDocker(dependsOn: ':testing:prepareLibs', type: Copy) {
 
 task buildMyAppImage( dependsOn : 'copyJavaLibsForDocker', type: DockerBuildImage) {
     inputDir = file('docker')
-    images.add('aaraksheet/myrepo:languagepack-test')
+    images.add('aaraksheet/myrepo:languagepack')
+    platform= System.properties['os.arch'].toString().startsWith('aarch64') ? 'linux/arm64' : 'linux/amd64'
+    registryCredentials.username='aaraksheet@gmail.com'
+    registryCredentials.password='Dinda@123'
+    registryCredentials.url='https://hub.docker.com/'
 }
