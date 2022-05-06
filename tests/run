@@ -66,7 +66,7 @@ for directory in *; do
             boxdir=$workdir/box
             echo "Using box directory $boxdir"
 
-            cp $SOURCE_FILE $boxdir
+            cp --parents -r $SOURCE_FILE $boxdir
             [[ -f $SQLITE_DB ]] && cp $SQLITE_DB $boxdir
 
             if [[ $COMPILE_CMD != "" ]]; then
