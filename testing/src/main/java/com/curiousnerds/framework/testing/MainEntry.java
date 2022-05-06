@@ -1,6 +1,5 @@
 package com.curiousnerds.framework.testing;
 
-import com.curiousnerds.streams.tests.test5.ProblemTest;
 import org.junit.platform.launcher.Launcher;
 import org.junit.platform.launcher.LauncherDiscoveryRequest;
 import org.junit.platform.launcher.TestPlan;
@@ -22,11 +21,17 @@ public class MainEntry {
 
         SummaryGeneratingListener listener = new SummaryGeneratingListener();
 
-        File classesDir = new File("/Users/abhiram/IdeaProjects/judge-dredd/testing/out/production/classes");
+        File classesDir = new File(args[0]);
         LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder.request()
                 .selectors(selectClasspathRoots(Collections.singleton(Paths.get(classesDir.toURI()))))
                 .filters(includeClassNamePatterns(".*"))
                 .build();
+
+//        LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder.request()
+//                .selectors(
+//                        selectPackage("tests"),
+//                        selectClass("ProblemTest")
+//                ).build();
 
         Launcher launcher = LauncherFactory.create();
         TestPlan testPlan = launcher.discover(request);
