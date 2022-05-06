@@ -1,4 +1,4 @@
-package com.curiousnerds.streams.common;
+package tests;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 

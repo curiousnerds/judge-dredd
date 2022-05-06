@@ -1,4 +1,4 @@
-package com.curiousnerds.streams.common;
+package tests;
 
 import java.util.List;
 

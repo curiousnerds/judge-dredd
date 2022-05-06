@@ -1,17 +1,28 @@
-package com.curiousnerds.streams.common;
+package tests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
+import java.net.*;
 
 public class Data {
     public List<Customer> getCustomers()  {
-        ClassLoader classLoader= ClassLoader.getSystemClassLoader();
-        String name = "data.json";
-        URL resource = classLoader.getResource(name);
+            Mall onlineShoppingMall = getMall();
+        return onlineShoppingMall.getCustomers();
+    }
+
+    private Mall getMall(){
+        URL resource = Data.class.getResource("resources/data.json");
         File f = new File(resource.getFile());
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -21,6 +32,11 @@ public class Data {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return onlineShoppingMall.getCustomers();
+        return onlineShoppingMall;
     }
+
+    public List<Shop> getShops() {
+        return getMall().getShops();
+    }
+
 }
