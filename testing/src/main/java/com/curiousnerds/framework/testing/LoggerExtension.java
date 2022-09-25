@@ -6,6 +6,8 @@ import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestWatcher;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -82,10 +84,13 @@ public class LoggerExtension implements TestWatcher, AfterAllCallback
             } else {
            */
             if(o1!=null ){
+                StringWriter sw = new StringWriter();
+                PrintWriter pw = new PrintWriter(sw);
                 try {
                     existing.add(new Wrap(extensionContext.getDisplayName(), o1.expected.toString(), o1.actual.toString(), false, throwable.getMessage()));
                 }catch (Exception e){
-                    existing.add(new Wrap(extensionContext.getDisplayName(), "Error", "Error", false, throwable.getMessage()));
+                    throwable.printStackTrace(pw);
+                    existing.add(new Wrap(extensionContext.getDisplayName(), "Error", "Error", false, pw.toString()));
                 }
             }else{
                //TODO:  existing.add(new Wrap(extensionContext.getDisplayName(),"N/A", "N/A", false,"AUTHOR: Please make sure you provide the extected and actual in the @Test method"));
