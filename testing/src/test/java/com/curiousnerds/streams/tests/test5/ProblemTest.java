@@ -1,4 +1,4 @@
-package com.curiousnerds.streams.tests.test6;
+package com.curiousnerds.streams.tests.test5;
 
 import com.curiousnerds.framework.testing.CuriousTestable;
 import com.curiousnerds.framework.testing.LoggerExtension;
@@ -21,7 +21,7 @@ public class ProblemTest extends CuriousTestable {
         Stream<String> distinctCustomerAge = p.getTopRichCustomersName();
 
         this.actual = String.valueOf(distinctCustomerAge.collect(Collectors.toList()));
-        this.expected= "";
+        this.expected= "[Martin, Steven, Amy]";
         assertEquals(this.expected, this.actual);
     }
 }

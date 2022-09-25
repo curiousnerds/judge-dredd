@@ -28,7 +28,7 @@ dependencies {
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2.2'
 
-
+    implementation 'org.apiguardian:apiguardian-api:1.0.0'
 }
 
 
@@ -36,9 +36,12 @@ configurations {
     externalLib.extendsFrom(implementation)
 }
 
-task prepareLibs(dependsOn: 'jar' ,type: Copy){
+task prepareLibs(dependsOn: ['test','jar'] ,type: Copy){
         from configurations.externalLib {
         into file(buildDir.toString()+'/libs/')
 
     }
+}
+test {
+    useJUnitPlatform()
 }

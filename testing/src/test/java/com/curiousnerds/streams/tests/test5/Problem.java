@@ -1,4 +1,4 @@
-package tests;
+package com.curiousnerds.streams.tests.test5;
 
 import com.curiousnerds.streams.common.Customer;
 import com.curiousnerds.streams.common.Data;

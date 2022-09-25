@@ -22,7 +22,7 @@ public class Data {
     }
 
     private Mall getMall(){
-        URL resource = Data.class.getResource("resources/data.json");
+        URL resource = Data.class.getResource("../../../../../../resources/test/data.json");
         File f = new File(resource.getFile());
 
         ObjectMapper objectMapper = new ObjectMapper();

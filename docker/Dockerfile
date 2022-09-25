@@ -3,7 +3,7 @@
 
 #Abhiram : this is taken from https://github.com/judge0/api-base/blob/v1.2.1/Dockerfile
 
-FROM buildpack-deps:jammy
+FROM buildpack-deps:kinetic
 
 ARG TARGETPLATFORM
 RUN echo '===========================SETTING UP JAVA FOR '$TARGETPLATFORM'=========================='
