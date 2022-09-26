@@ -2,7 +2,6 @@
 ╷
 ├─ JUnit Jupiter ✔
 │  └─ MainTest ✔
-│     └─ addition() ✔
 └─ JUnit Vintage ✔
 
 Test run finished after 43 ms

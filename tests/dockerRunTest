@@ -8,25 +8,9 @@
 # retrieves the expectedFile ( prechecked in knowing what will be the output of a given language pack with and the lines removed such
 # 'OK (0.010 sec real, 0.010 sec wall)' or 'Test run finished after' and checks every line for the run stored in the actualFile variable.
 
-##docker run -i -v $PWD:/tests -w /tests --privileged test bash  ./run -l bash --isolate > $directory/actual.txt
-#  # Isolate outputs the OK ... for all the files as a line
-#  actualFile=`sed -n '/OK/d;/Test run finished after/!p;/^[[:space:]]*$/d' bash/actual.txt` # remove any line with OK (....) as the numbers in the line will vary from run to run
-#  expectedFile=`sed -n '/OK/d;/Test run finished after/!p;/^[[:space:]]*$/d' bash/expected.txt` # remove any line with OK (....) as the numbers in the line will vary from run to run
-#   sed  's/\r$//'  bash/actual.txt > bash/actual.txt
-#   sed  's/\r$//'   bash/expected.txt  >  bash/expected.txt
-#
-# echo "$actualFile" #ENABLE THIS TO DEBUG
-# echo "$expectedFile"  #ENADLE THIS TO DEBUG
-#
-#  if [[ "$actualFile" =~ "$expectedFile" ]]; then
-#      echo "PASSED"
-#      #rm -f $directory/actual.txt
-#  else
-#      echo "FAILED!!!!!"
-#  fi
+##:ATTENSION!!!!!!! PAY CLOSE ATTENTION TO THE LINE ENDINGS FOR EACH OF THE expected.txt files, make sure its LF ,
+# choose the file and change it from file ->file properties -> line separator to LF Unix and mac
 
-#
-##var="$(docker run -it --rm -v $PWD:/tests -w /tests --privileged test bash ./run -l bash --isolate )"
 for directory in *; do
 
   [[ ! -d $directory ]] && continue
@@ -37,11 +21,14 @@ for directory in *; do
 
  #echo "$actualFile" #ENABLE THIS TO DEBUG
  #echo "$expectedFile"  #ENADLE THIS TO DEBUG
-
+  exitCode=0
   if [[ "$actualFile" =~ "$expectedFile" ]]; then
-      echo "PASSED"
-      #rm -f $directory/actual.txt
+      echo $directory ": PASSED"
+      rm -f $directory/actual.txt
   else
-      echo "FAILED!!!!!"
+      echo $directory ": FAILED!!!!!"
+      exitCode=1
+      break;
   fi
 done
+exit $exitCode;
