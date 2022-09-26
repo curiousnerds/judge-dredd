@@ -33,11 +33,15 @@ RUN set -xe && \
 ADD java-libs    /usr/local/java-libs/
 
 ## Check for latest version here: https://ftpmirror.gnu.org/bash
+## I was getting the error, while building the docker image for the following task
+## 'curl: (56) OpenSSL SSL_read: error:0A000126:SSL routines::unexpected eof while reading, errno 0' was the
+## error while connectiong to ftpmirror.gnu.org/bash , so I changed to ftp.gnu.org, and the
+## build seems to be working..
 ENV BASH_VERSIONS \
       5.0
 RUN set -xe && \
     for VERSION in $BASH_VERSIONS; do \
-      curl -fSsL "https://ftpmirror.gnu.org/bash/bash-$VERSION.tar.gz" -o /tmp/bash-$VERSION.tar.gz && \
+      curl -fSsL "https://ftp.gnu.org/gnu/bash/bash-5.0.tar.gz" -o /tmp/bash-$VERSION.tar.gz && \
       mkdir /tmp/bash-$VERSION && \
       tar -xf /tmp/bash-$VERSION.tar.gz -C /tmp/bash-$VERSION --strip-components=1 && \
       rm /tmp/bash-$VERSION.tar.gz && \

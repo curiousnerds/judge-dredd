@@ -1,0 +1,8 @@
+--- Python (2.7.17) ---
+hello, world
+OK (0.010 sec real, 0.010 sec wall)
+
+--- Python (3.8.1) ---
+hello, world
+OK (0.012 sec real, 0.012 sec wall)
+

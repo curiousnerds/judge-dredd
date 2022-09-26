@@ -1,0 +1,17 @@
+--- Java (OpenJDK 13.0.1) ---
+OK (1.405 sec real, 0.595 sec wall)
+[ {
+  "testCase" : "Check if richCustomerCondition is a lambda",
+  "expected" : "true",
+  "actual" : "true",
+  "status" : true,
+  "failReason" : ""
+}, {
+  "testCase" : "check if the size is 2",
+  "expected" : "2",
+  "actual" : "9",
+  "status" : false,
+  "failReason" : "expected: <9> but was: <2>"
+} ]
+OK (0.857 sec real, 0.441 sec wall)
+

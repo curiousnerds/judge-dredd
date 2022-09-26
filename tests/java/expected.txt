@@ -1,0 +1,5 @@
+--- Java (OpenJDK 13.0.1) ---
+OK (0.798 sec real, 0.384 sec wall)
+hello, world
+OK (0.077 sec real, 0.068 sec wall)
+

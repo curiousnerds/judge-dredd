@@ -51,20 +51,20 @@ for directory in *; do
         cd $directory
 
         if [[ $ISOLATE == true ]]; then
-            echo "Initializing isolate box."
+          #  echo "Initializing isolate box."
 
             set +e
             workdir="$(isolate --cg --init)"
             isolate_exit=$?
             set -e
             if [[ $isolate_exit != 0 ]]; then
-                echo "Sandbox not cleaned. Cleaning now."
+             #   echo "Sandbox not cleaned. Cleaning now."
                 isolate --cg --cleanup
                 workdir="$(isolate --cg --init)"
             fi
 
             boxdir=$workdir/box
-            echo "Using box directory $boxdir"
+           # echo "Using box directory $boxdir"
 
             cp --parents -r $SOURCE_FILE $boxdir
             [[ -f $SQLITE_DB ]] && cp $SQLITE_DB $boxdir
@@ -76,7 +76,7 @@ for directory in *; do
                 fi
                 echo $COMPILE_CMD > $boxdir/compile
 
-                echo "Compiling inside isolate."
+              #  echo "Compiling inside isolate."
 
                 set +e
                 isolate --cg -i /dev/null -t 15 -x 0 -w 20 -k 128000 -p120 --cg-timing --cg-mem=512000 -f 4096 \
@@ -85,7 +85,7 @@ for directory in *; do
 
                 if [[ $? != 0 ]]; then
                     if [[ $SKIP_CLEANUP != true ]]; then
-                        echo "Running isolate cleanup."
+                 #       echo "Running isolate cleanup."
                         isolate --cg --cleanup
                         rm -rf $workdir || true
                     else
@@ -104,7 +104,7 @@ for directory in *; do
             echo $RUN_CMD > $boxdir/run
             echo "world" > $workdir/stdin
 
-            echo "Running inside isolate."
+          #  echo "Running inside isolate."
 
             set +e
             isolate --cg -t 2 -x 0.5 -w 5 -k 64000 -p60 --cg-timing --cg-mem=128000 -f 1024 \
@@ -116,7 +116,7 @@ for directory in *; do
             fi
 
             if [[ $SKIP_CLEANUP != true ]]; then
-                echo "Running isolate cleanup."
+              #  echo "Running isolate cleanup."
                 isolate --cg --cleanup
                 rm -rf $workdir || true
             else
