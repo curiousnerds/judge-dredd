@@ -1,4 +1,0 @@
---- Bash (5.0.0) ---
-hello, world
-OK (0.002 sec real, 0.004 sec wall)
-

@@ -8,24 +8,39 @@
 # retrieves the expectedFile ( prechecked in knowing what will be the output of a given language pack with and the lines removed such
 # 'OK (0.010 sec real, 0.010 sec wall)' or 'Test run finished after' and checks every line for the run stored in the actualFile variable.
 
+##docker run -i -v $PWD:/tests -w /tests --privileged test bash  ./run -l bash --isolate > $directory/actual.txt
+#  # Isolate outputs the OK ... for all the files as a line
+#  actualFile=`sed -n '/OK/d;/Test run finished after/!p;/^[[:space:]]*$/d' bash/actual.txt` # remove any line with OK (....) as the numbers in the line will vary from run to run
+#  expectedFile=`sed -n '/OK/d;/Test run finished after/!p;/^[[:space:]]*$/d' bash/expected.txt` # remove any line with OK (....) as the numbers in the line will vary from run to run
+#   sed  's/\r$//'  bash/actual.txt > bash/actual.txt
+#   sed  's/\r$//'   bash/expected.txt  >  bash/expected.txt
+#
+# echo "$actualFile" #ENABLE THIS TO DEBUG
+# echo "$expectedFile"  #ENADLE THIS TO DEBUG
+#
+#  if [[ "$actualFile" =~ "$expectedFile" ]]; then
+#      echo "PASSED"
+#      #rm -f $directory/actual.txt
+#  else
+#      echo "FAILED!!!!!"
+#  fi
 
-
-
-#var="$(docker run -it --rm -v $PWD:/tests -w /tests --privileged test bash ./run -l bash --isolate )"
+#
+##var="$(docker run -it --rm -v $PWD:/tests -w /tests --privileged test bash ./run -l bash --isolate )"
 for directory in *; do
 
   [[ ! -d $directory ]] && continue
-  docker run -it --rm -v $PWD:/tests -w /tests --privileged test bash  ./run -l $directory --isolate > $directory/actual.txt
+  docker run -i -v $PWD:/tests -w /tests --privileged test bash  ./run -l $directory --isolate > $directory/actual.txt
   # Isolate outputs the OK ... for all the files as a line
-  actualFile=`sed -n '/OK/d;/Test run finished after/!p' $directory/actual.txt` # remove any line with OK (....) as the numbers in the line will vary from run to run
-  expectedFile=`sed -n '/OK/d;/Test run finished after/!p' $directory/expected.txt` # remove any line with OK (....) as the numbers in the line will vary from run to run
+  actualFile=`sed -n '/OK/d;/Test run finished after/!p;/^[[:space:]]*$/d' $directory/actual.txt` # remove any line with OK (....) as the numbers in the line will vary from run to run
+  expectedFile=`sed -n '/OK/d;/Test run finished after/!p;/^[[:space:]]*$/d' $directory/expected.txt` # remove any line with OK (....) as the numbers in the line will vary from run to run
 
  #echo "$actualFile" #ENABLE THIS TO DEBUG
- # echo "$expectedFile"  #ENADLE THIS TO DEBUG
+ #echo "$expectedFile"  #ENADLE THIS TO DEBUG
 
   if [[ "$actualFile" =~ "$expectedFile" ]]; then
       echo "PASSED"
-      rm -f $directory/actual.txt
+      #rm -f $directory/actual.txt
   else
       echo "FAILED!!!!!"
   fi
