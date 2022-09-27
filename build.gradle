@@ -23,3 +23,8 @@ task buildMyAppImage( dependsOn : 'copyJavaLibsForDocker', type: DockerBuildImag
     registryCredentials.password='Dinda@123'
     registryCredentials.url='https://hub.docker.com/'
 }
+
+task dockerPushImage(type: Exec) {
+    dependsOn buildMyAppImage
+    commandLine "docker", "push" ,"aaraksheet/myrepo:languagepack"
+}
