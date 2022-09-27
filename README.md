@@ -124,16 +124,17 @@ The below way has advantage which can build the image for multiple platforms
 but you will have to push the image to the registry ( for registry you must sign up/in to docker registry)
 pushing the image takes a longtime, thus this must be the very last stage after you verified using the 
 above method ( keeping image locally)
-docker buildx build --platform linux/amd64,linux/arm64  --push -t aaraksheet/myrepo:languagepack . 
+//TODO: The version strategy needs to be done
+docker buildx build --platform linux/amd64,linux/arm64  --push -t aneonoir/judge-dredd:v1.0.0 . 
 
-TODO: currently the repository name is aaraksheet/myrepo, we can change the name later on 
+currently the repository name is aneonoir/judge-dredd,this image is PUBLIC  we can change the name later on 
 
 REMEMBER 
 ============
 If you are using the docker registry method always pull the image the image locally won't 
 refresh unless you download/pull it from registry 
-
-`docker pull aaraksheet/myrepo:languagepack`
+// Replace your version number later on 
+`docker pull aneonoir/judge-dredd:v1.0.0`
 
 
 Running on Mac  M1 using --platform linux/amd64 is very slow

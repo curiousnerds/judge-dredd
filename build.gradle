@@ -13,18 +13,19 @@ task copyJavaLibsForDocker(dependsOn: ':testing:prepareLibs', type: Copy) {
 
 task buildMyAppImage( dependsOn : 'copyJavaLibsForDocker', type: DockerBuildImage) {
     inputDir = file('docker')
-
-    images.add('aaraksheet/myrepo:languagepack')
+    //TODO:  the version strategy later
+    images.add('aneonoir/judge-dredd:v1.0.0')
     //TODO: BUG that prevents taking the targetplatform arg into the docker file which
     // is used to download the right version of the java etc.
     buildArgs['TARGETPLATFORM'] = System.properties['os.arch'].toString().startsWith('aarch64') ? 'linux/arm64' : 'linux/amd64'
     platform.set("linux/arm64")
-    registryCredentials.username='aaraksheet@gmail.com'
-    registryCredentials.password='Dinda@123'
+    registryCredentials.username='aneonoir@gmail.com'
+    registryCredentials.password='DindaMin@123'
     registryCredentials.url='https://hub.docker.com/'
 }
 
 task dockerPushImage(type: Exec) {
     dependsOn buildMyAppImage
-    commandLine "docker", "push" ,"aaraksheet/myrepo:languagepack"
+    commandLine "docker", "push" ,"aneonoir/judge-dredd:v1.0.0"
+    //TODO:  the version strategy later
 }
