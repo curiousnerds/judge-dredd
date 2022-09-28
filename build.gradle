@@ -19,7 +19,7 @@ task buildMyAppImage( dependsOn : 'copyJavaLibsForDocker', type: DockerBuildImag
     // is used to download the right version of the java etc.
     buildArgs['TARGETPLATFORM'] = System.properties['os.arch'].toString().startsWith('aarch64') ? 'linux/arm64' : 'linux/amd64'
     platform.set("linux/arm64")
-    registryCredentials.username='aneonoir@gmail.com'
+    registryCredentials.username='aneonoir'
     registryCredentials.password='DindaMin@123'
     registryCredentials.url='https://hub.docker.com/'
 }
