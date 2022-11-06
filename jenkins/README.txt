@@ -1,3 +1,7 @@
+
+start the jenkins
+java -jar jenkins.war --httpPort=8080
+
 The following command was used to export the job from jenkins.
 
 cd /opt/homebrew/Cellar/jenkins-lts/2.361.1/libexec
