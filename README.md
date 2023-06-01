@@ -136,6 +136,8 @@ refresh unless you download/pull it from registry
 // Replace your version number later on 
 `docker pull aneonoir/judge-dredd:v1.0.0`
 
+if you ever face problem related to the worker directory is not able to be created , make sure the cggroup is enabled
+"deprecatedCgroupv1": true. see above 
 
 Running on Mac  M1 using --platform linux/amd64 is very slow
 docker run --privileged -v $PWD:/tests -w /tests -e MYSQL_ROOT_PASSWORD=my-secret-pw -e MYSQL_USER=dinda   -e MYSQL_PASSWORD=dinda  -e MYSQL_DATABASE=dinda -d curiousnerds/languagepack:1.0.0`
