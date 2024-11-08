@@ -1,6 +1,8 @@
 
-start the jenkins
-java -jar jenkins.war --httpPort=8080
+
+start jenkins
+
+brew services start jenkins-lts
 
 The following command was used to export the job from jenkins.
 
