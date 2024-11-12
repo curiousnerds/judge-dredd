@@ -37,8 +37,8 @@ ADD java-libs    /usr/local/java-libs/
 ## 'curl: (56) OpenSSL SSL_read: error:0A000126:SSL routines::unexpected eof while reading, errno 0' was the
 ## error while connectiong to ftpmirror.gnu.org/bash , so I changed to ftp.gnu.org, and the
 ## build seems to be working..
-ENV BASH_VERSIONS \
-      5.0
+ENV BASH_VERSIONS="\
+      5.0"
 RUN set -xe && \
     for VERSION in $BASH_VERSIONS; do \
       curl -fSsL "https://ftp.gnu.org/gnu/bash/bash-5.0.tar.gz" -o /tmp/bash-$VERSION.tar.gz && \
@@ -81,9 +81,9 @@ RUN set -xe && \
 #Adding python version
 
 # Check for latest version here: https://www.python.org/downloads
-ENV PYTHON_VERSIONS \
+ENV PYTHON_VERSIONS="\
       3.8.1 \
-      2.7.17
+      2.7.17"
 RUN set -xe && \
     for VERSION in $PYTHON_VERSIONS; do \
       curl -fSsL "https://www.python.org/ftp/python/$VERSION/Python-$VERSION.tar.xz" -o /tmp/python-$VERSION.tar.xz && \
@@ -100,7 +100,7 @@ RUN set -xe && \
 
 # python addition done.
 
-ENV BOX_ROOT /var/local/lib/isolate
+ENV BOX_ROOT="/var/local/lib/isolate"
 
 LABEL maintainer="Abhiram misrha"
 LABEL version="1.0.0"
