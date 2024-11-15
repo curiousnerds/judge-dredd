@@ -68,19 +68,18 @@ RUN set -xe && \
     locale-gen
 ENV LANG=en_US.UTF-8 LANGUAGE=en_US:en LC_ALL=en_US.UTF-8
 
-RUN set -xe && \
-    apt-get update && \
+RUN apt-get update && \
     apt-get install -y --no-install-recommends git libcap-dev && \
     rm -rf /var/lib/apt/lists/* && \
-    git clone https://github.com/judge0/isolate.git /tmp/isolate && \
+    git clone https://github.com/envicutor/isolate.git /tmp/isolate/ && \
     cd /tmp/isolate && \
-    git checkout c43acde2bde22b0f18ec5e3a0f3ebd66d96b0bee && \
+    git checkout af6db68042c3aa0ded80787fbb78bc0846ea2114 && \
     make -j$(nproc) install && \
     rm -rf /tmp/*
 
 #Adding python version
 
-# Check for latest version here: https://www.python.org/downloads
+#Check for latest version here: https://www.python.org/downloads
 ENV PYTHON_VERSIONS="\
       3.8.1 \
       2.7.17"
