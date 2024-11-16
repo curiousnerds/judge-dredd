@@ -17,13 +17,6 @@ RUN echo "Downloading JDK for $TARGETPLATFORM" \
     && tar -xzf /tmp/openjdk13.tar.gz -C /usr/local/openjdk13 --strip-components=1 \
     && rm -f /tmp/openjdk13.tar.gz
 
-
-# JUnit Platform Console Standalone
-RUN set -xe && \
-    mkdir /usr/local/junit-platform-console-standalone-1.6.2 && \
-    cd /usr/local/junit-platform-console-standalone-1.6.2 && \
-    curl -fSsL "https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.6.2/junit-platform-console-standalone-1.6.2.jar" -o launcher.jar
-
 # Add junit related libraries
 
 ADD java-libs   /usr/local/java-libs/
