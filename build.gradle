@@ -25,9 +25,14 @@ task buildMyAppImage( dependsOn : 'copyJavaLibsForDocker', type: DockerBuildImag
     registryCredentials.password='DindaMin@123'
     registryCredentials.url='https://hub.docker.com/'
 }
+task dockerLogin(dependsOn : 'copyJavaLibsForDocker', type: DockerBuildImage){
+    registryCredentials.username='aneonoir'
+    registryCredentials.password='DindaMin@123'
+    registryCredentials.url='https://hub.docker.com/'
+}
 task dockerBuildxImage(type:Exec) {
     group 'docker'
-    dependsOn copyJavaLibsForDocker
+    dependsOn dockerLogin
     workingDir 'docker'
     executable 'docker'
    // args = ['buildx', 'build', '--platform', 'linux/amd64,linux/arm64', '-t', "$registry/$project.name:$project.version", '-t', "$registry/$project.name:latest", '--push', '.']

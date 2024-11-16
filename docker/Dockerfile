@@ -35,20 +35,21 @@ FROM buildpack-deps:bookworm AS python-base
 # Define Python versions to install
 ENV PYTHON_VERSIONS="3.8.1 2.7.17" \
     PYTHON_INSTALL_DIR=/usr/local/python
+COPY python/python-2.7.17.tar.xz /tmp/python-src/python-2.7.17.tar.xz
+COPY python/python-3.8.1.tar.xz /tmp/python-src/python-3.8.1.tar.xz
 
 RUN set -xe && \
     mkdir -p "$PYTHON_INSTALL_DIR" && \
     for VERSION in $PYTHON_VERSIONS; do \
         echo "Installing Python $VERSION..." && \
-        curl -fsSL "https://www.python.org/ftp/python/$VERSION/Python-$VERSION.tar.xz" -o /tmp/python-$VERSION.tar.xz && \
         mkdir -p /tmp/python-$VERSION && \
-        tar -xf /tmp/python-$VERSION.tar.xz -C /tmp/python-$VERSION --strip-components=1 && \
-        rm -f /tmp/python-$VERSION.tar.xz && \
+        tar -xf /tmp/python-src/python-$VERSION.tar.xz -C /tmp/python-$VERSION --strip-components=1 && \
+        rm -f /tmp/python-src/python-$VERSION.tar.xz && \
         cd /tmp/python-$VERSION && \
         ./configure --prefix=$PYTHON_INSTALL_DIR/$VERSION && \
         make -j$(nproc) && \
         make install && \
-        rm -rf /tmp/python-$VERSION; \
+        rm -rf /tmp/python-$VERSION;\
     done
 #TODO: must update the places where the python version is being used :
 
