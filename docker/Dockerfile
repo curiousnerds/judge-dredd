@@ -28,6 +28,7 @@ RUN set -xe && \
 
 ADD java-libs   /usr/local/java-libs/
 
+ADD junit-standalone-lib   /usr/local/junit-standalone-lib/
 
 # Stage 2: Base image for Python setup
 FROM buildpack-deps:bookworm AS python-base
@@ -93,6 +94,7 @@ FROM buildpack-deps:bookworm
 # Copy Java installation from the Java base stage
 COPY --from=java-base /usr/local/openjdk13 /usr/local/openjdk13
 COPY --from=java-base /usr/local/java-libs/ /usr/local/java-libs/
+COPY --from=java-base /usr/local/junit-standalone-lib/ /usr/local/junit-standalone-lib/
 
 # Copy Python installation from the Python base stage
 COPY --from=python-base /usr/local/python /usr/local/python
