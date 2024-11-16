@@ -14,7 +14,7 @@
 for directory in *; do
 
   [[ ! -d $directory ]] && continue
-  docker run  -i -v $PWD:/tests -w /tests --privileged $1 bash  ./run -l $directory --isolate > $directory/actual.txt
+  /usr/local/bin/docker run  -i -v $PWD:/tests -w /tests --privileged $1 bash  ./run -l $directory --isolate > $directory/actual.txt
   # Isolate outputs the OK ... for all the files as a line
   actualFile=`sed -n '/OK/d;/Test run finished after/!p;/^[[:space:]]*$/d' $directory/actual.txt` # remove any line with OK (....) as the numbers in the line will vary from run to run
   expectedFile=`sed -n '/OK/d;/Test run finished after/!p;/^[[:space:]]*$/d' $directory/expected.txt` # remove any line with OK (....) as the numbers in the line will vary from run to run
