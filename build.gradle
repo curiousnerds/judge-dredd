@@ -30,7 +30,7 @@ task dockerBuildxImage(type:Exec) {
     group 'docker'
     dependsOn copyJavaLibsForDocker
     workingDir 'docker'
-    executable 'docker'
+    executable '/usr/local/bin/docker'
    // args = ['buildx', 'build', '--platform', 'linux/amd64,linux/arm64', '-t', "$registry/$project.name:$project.version", '-t', "$registry/$project.name:latest", '--push', '.']
     args = ['buildx', 'build', '--platform', 'linux/amd64,linux/arm64', '-t', "aneonoir/$project.name:v2.0.${buildNumber}", '--push', '.']
 }
