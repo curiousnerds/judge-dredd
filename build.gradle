@@ -6,6 +6,7 @@ version 'v1.0.0'
 // Import task types
 import com.bmuschko.gradle.docker.tasks.image.*
 
+def buildNumber = project.hasProperty('buildNumber') ? project.buildNumber : 'latest'
 
 task copyJavaLibsForDocker(dependsOn: ':testing:prepareLibs', type: Copy) {
     from(file(project(':testing').buildDir.toString()+'/libs/'))
@@ -30,12 +31,12 @@ task dockerBuildxImage(type:Exec) {
     workingDir 'docker'
     executable 'docker'
    // args = ['buildx', 'build', '--platform', 'linux/amd64,linux/arm64', '-t', "$registry/$project.name:$project.version", '-t', "$registry/$project.name:latest", '--push', '.']
-    args = ['buildx', 'build', '--platform', 'linux/amd64,linux/arm64', '-t', "aneonoir/$project.name:$project.version", '--push', '.']
+    args = ['buildx', 'build', '--platform', 'linux/amd64,linux/arm64', '-t', "aneonoir/$project.name:v2.0.${buildNumber}", '--push', '.']
 }
 // docker buildx build --platform linux/amd64,linux/arm64 -t aneonoir/worker:v1.0.0 --push docker
 // This is no longer required as the dockerBuildxImage does the push
 //task dockerPushImage(type: Exec) {
 //    dependsOn buildMyAppImage
 //    commandLine "docker", "push" ,"aneonoir/judge-dredd:v1.0.0"
-//    //TODO:  the version strategy later
+//
 //}
