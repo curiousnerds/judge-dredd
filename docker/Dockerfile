@@ -118,6 +118,13 @@ RUN apt-get update && \
     make -j$(nproc) install && \
     rm -rf /tmp/*
 
+# install python packages, numpy, pandas,matplotlib
+
+RUN /usr/local/python/3.8.1/bin/python3.8 -m pip install --upgrade pip && \
+    /usr/local/python/3.8.1/bin/python3.8 -m pip install numpy  && \
+    /usr/local/python/3.8.1/bin/python3.8 -m pip install pandas && \
+    /usr/local/python/3.8.1/bin/python3.8 -m pip install matplotlib && \
+    /usr/local/python/3.8.1/bin/python3.8 -m pip install seaborn
 # Set up environment variables
 # WE ARE NOT SETTING ANY ENVIRONMENT VARIABLE
 
